@@ -13,7 +13,7 @@ const List = () => {
           !books.length ?
             <p>No books available</p>
             :
-            books.map(book => <ListItem book={book} />)
+            books.map(book => <ListItem key={book.id} book={book} />)
         }
       </ul>
     </div>
