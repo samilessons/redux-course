@@ -12,7 +12,7 @@ function App() {
           <Form/>
         </div>
         <div className="flex flex-col flex-1 basis-3/5">
-          {/* <Filter /> */}
+          <Filter />
           <List />
         </div>
       </main>
