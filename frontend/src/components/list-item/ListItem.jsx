@@ -1,12 +1,13 @@
 import { FaTrashAlt, FaBookmark } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 
-import { deleteBook } from "../../redux/books/actionCreators";
+import { deleteBook, toggleFavorite } from "../../redux/books/actionCreators";
 
-const ListItem = ({ book: { title, author, id } }) => {
+const ListItem = ({ book: { title, author, id, isFavorite } }) => {
   const dispatch = useDispatch();
 
   const handleDeleteBook = id => dispatch(deleteBook(id));
+  const handleToggleFavorite = id => dispatch(toggleFavorite(id));
 
   return (
     <li className="flex justify-between items-center py-2 mb-2 rounded-lg px-4 border-b border-gray-300 bg-white hover:bg-[#dbe4f8] transition-colors duration-300">
@@ -28,7 +29,8 @@ const ListItem = ({ book: { title, author, id } }) => {
           <FaTrashAlt />
         </button>
         <button
-          className="px-3 py-2 bg-amber-400  hover:bg-amber-300 transition-colors duration-300 text-white cursor-pointer rounded-lg"
+          onClick={() => handleToggleFavorite(id)}
+          className={`${isFavorite ? "bg-amber-400  hover:bg-amber-300" : "bg-gray-400 hover:bg-gray-300"} px-3 py-2  transition-colors duration-300 text-white cursor-pointer rounded-lg`}
         >
           <FaBookmark />
         </button>
