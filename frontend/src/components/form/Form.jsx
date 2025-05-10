@@ -20,7 +20,7 @@ const Form = () => {
   }
   return (
     <div className="p-4 m-4 bg-[#f2f2f2] rounded-lg shadow-lg">
-      <h2 className="mb-4 text-2xl">Add a New Book</h2>
+      <h2 className="mb-4 text-2xl text-center">Add a New Book</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"

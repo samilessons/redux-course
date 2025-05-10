@@ -1,10 +1,40 @@
-const ListItem = ({book}) => {
+import { FaTrashAlt, FaBookmark } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+
+import { deleteBook } from "../../redux/books/actionCreators";
+
+const ListItem = ({ book: { title, author, id } }) => {
+  const dispatch = useDispatch();
+
+  const handleDeleteBook = id => dispatch(deleteBook(id));
+
   return (
     <li className="flex justify-between items-center py-2 mb-2 rounded-lg px-4 border-b border-gray-300 bg-white hover:bg-[#dbe4f8] transition-colors duration-300">
-      <h3>{book.title}</h3>
-      <p>{ book.author}</p>
+      <div>
+        <h3>
+          <span className="text-xs mr-2">Title:</span>
+          {title}
+        </h3>
+        <p>
+          <span className="text-xs mr-2">Author:</span>
+          <strong>{author}</strong>
+        </p>
+      </div>
+      <div className="flex gap-2">
+        <button
+          onClick={() => handleDeleteBook(id)}
+          className="px-3 py-2 bg-red-700  hover:bg-red-600 transition-colors duration-300 text-white cursor-pointer rounded-lg"
+        >
+          <FaTrashAlt />
+        </button>
+        <button
+          className="px-3 py-2 bg-amber-400  hover:bg-amber-300 transition-colors duration-300 text-white cursor-pointer rounded-lg"
+        >
+          <FaBookmark />
+        </button>
+      </div>
     </li>
-  )
+  );
 };
 
 export default ListItem;
