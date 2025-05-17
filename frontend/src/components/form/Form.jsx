@@ -6,17 +6,19 @@ import { addBook } from "../../redux/books/actionCreators";
 import data from "../../data/books.json";
 
 const Form = () => {
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
+  const [state, setState] = useState({
+    title: "",
+    author: ""
+  });
+
   const dispatch = useDispatch();
+  const { title, author } = state;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (title && author) {
-      dispatch(addBook(createBookWithID({ title, author })));
-      setTitle("");
-      setAuthor("");
+      dispatch(addBook(createBookWithID({ title, author})));
+      setState({ title: "", author: "" });
     }
   };
 
@@ -31,14 +33,14 @@ const Form = () => {
         <input
           type="text"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) => setState(prevState => ({ ...prevState, title: e.target.value }))}
           className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg"
           placeholder="Book Title"
         />
         <input
           type="text"
           value={author}
-          onChange={(e) => setAuthor(e.target.value)}
+          onChange={(e) => setState(prevState => ({ ...prevState, author: e.target.value }))}
           className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-lg"
           placeholder="Book Author"
         />
