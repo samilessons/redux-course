@@ -24,7 +24,13 @@ const List = () => {
           !filteredBooks.length ?
             <p className="text-center">No books available</p>
             :
-            filteredBooks.map(book => <ListItem key={book.id} book={book} />)
+            filteredBooks.map(book => <ListItem
+              key={book.id}
+              book={book}
+              booksByFilteredTitle={booksByFilteredTitle}
+              booksByFilteredAuthor={booksByFilteredAuthor}
+            />
+          )
         }
       </ul>
     </div>

@@ -3,7 +3,15 @@ import { useDispatch } from "react-redux";
 
 import { deleteBook, toggleFavorite } from "../../redux/books/actionCreators";
 
-const ListItem = ({ book: { title, author, id, isFavorite } }) => {
+import markedMatch from "../../utils/marketMatch";
+
+const ListItem = (
+  {
+    book: { title, author, id, isFavorite },
+    booksByFilteredTitle,
+    booksByFilteredAuthor
+  }
+) => {
   const dispatch = useDispatch();
 
   const handleDeleteBook = id => dispatch(deleteBook(id));
@@ -14,11 +22,11 @@ const ListItem = ({ book: { title, author, id, isFavorite } }) => {
       <div>
         <h3>
           <span className="text-xs mr-2">Title:</span>
-          {title}
+          {markedMatch(title, booksByFilteredTitle)}
         </h3>
         <p>
           <span className="text-xs mr-2">Author:</span>
-          <strong>{author}</strong>
+          <strong>{markedMatch(author, booksByFilteredAuthor)}</strong>
         </p>
       </div>
       <div className="flex gap-2">
