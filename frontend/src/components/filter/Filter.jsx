@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setTitleFilter,
   setAuthorFilter,
+  setOnlyFavoriteFilter,
   resetFilters,
   selectTitleFilter,
-  selectAuthorFilter
+  selectAuthorFilter,
+  selectonlyFavoriteFilter
 } from "../../redux/slices/filterSlice";
 
 const Filter = () => {
@@ -14,9 +16,14 @@ const Filter = () => {
 
   const stateOfTitle = useSelector(selectTitleFilter);
   const stateOfAuthor = useSelector(selectAuthorFilter);
+  const stateOfOnlyFavorite = useSelector(selectonlyFavoriteFilter);
 
   const handleByTitle = (e) => dispatch(setTitleFilter(e.target.value));
   const handleByAuthor = (e) => dispatch(setAuthorFilter(e.target.value));
+  const handleByOnlyFavorite = () => {
+    setChecked(prevState => !prevState);
+    dispatch(setOnlyFavoriteFilter());
+  }
   const handleResetFilters = () => dispatch(resetFilters());
 
   return (
@@ -40,9 +47,10 @@ const Filter = () => {
       <div className="flex items-center gap-4 justify-between">
         <label className="flex items-center gap-2 cursor-pointer">
           <input
-            onChange={() => setChecked(prevState => !prevState)}
+            onChange={handleByOnlyFavorite}
             className="w-4 h-4 cursor-pointer"
             type="checkbox"
+            checked={stateOfOnlyFavorite}
             style={
               checked ? {
                 clipPath: "polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%)",

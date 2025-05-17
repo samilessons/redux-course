@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { selectTitleFilter, selectAuthorFilter } from "../../redux/slices/filterSlice";
+import { selectTitleFilter, selectAuthorFilter, selectonlyFavoriteFilter } from "../../redux/slices/filterSlice";
 
 import ListItem from "../list-item/ListItem";
 
@@ -7,12 +7,13 @@ const List = () => {
   const books = useSelector(state => state.books);
   const booksByFilteredTitle = useSelector(selectTitleFilter);
   const booksByFilteredAuthor = useSelector(selectAuthorFilter);
+  const booksByFilteredOnlyFavorite = useSelector(selectonlyFavoriteFilter)
   
   const filteredBooks = books.filter(book => {
     const matchesTitle = book.title.toLowerCase().includes(booksByFilteredTitle.toLowerCase());
     const matchesAuthor = book.author.toLowerCase().includes(booksByFilteredAuthor.toLowerCase());
-
-    return matchesTitle && matchesAuthor;
+    const matchesOnlyFavorite = booksByFilteredOnlyFavorite ? book.isFavorite : true;
+    return matchesTitle && matchesAuthor && matchesOnlyFavorite;
   });
 
   return (
