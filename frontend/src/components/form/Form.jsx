@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import createBookWithID from "../../utils/createBookWithID";
 // import { addBook } from "../../redux/books/actionCreators";
 import { addBook } from "../../redux/slices/booksSlice";
-import data from "../../data/books.json";
+import data from "../../../../data/books.json";
 
 const Form = () => {
   const [state, setState] = useState({
