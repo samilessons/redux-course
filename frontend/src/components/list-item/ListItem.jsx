@@ -8,7 +8,7 @@ import markedMatch from "../../utils/marketMatch";
 
 const ListItem = (
   {
-    book: { title, author, id, isFavorite },
+    book: { title, author, id, isFavorite, source },
     booksByFilteredTitle,
     booksByFilteredAuthor
   }
@@ -28,6 +28,9 @@ const ListItem = (
         <p>
           <span className="text-xs mr-2">Author:</span>
           <strong>{markedMatch(author, booksByFilteredAuthor)}</strong>
+        </p>
+        <p className="text-xs text-gray-400 mt-1">
+          {source}
         </p>
       </div>
       <div className="flex gap-2">

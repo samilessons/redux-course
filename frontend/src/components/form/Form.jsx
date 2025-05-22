@@ -20,20 +20,20 @@ const Form = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (title && author) {
-      dispatch(addBook(createBookWithID({ title, author})));
+      dispatch(addBook(createBookWithID({ title, author}, "via form")));
       setState({ title: "", author: "" });
     }
   };
 
   const handleAddRandomBook = () => {
-    dispatch(addBook(createBookWithID(data[Math.floor(Math.random() * data.length)])));
+    dispatch(addBook(createBookWithID(data[Math.floor(Math.random() * data.length)], "via random")));
   };
 
   const handleAddRandomBookViaAPI = async () => {
     try {
       const res = await axios.get("http://localhost:8888/random-book");
       if (res?.data && res?.data.title && res?.data.author) {
-        dispatch(addBook(createBookWithID(res.data)));
+        dispatch(addBook(createBookWithID(res.data, "via api")));
       }
     }
 
