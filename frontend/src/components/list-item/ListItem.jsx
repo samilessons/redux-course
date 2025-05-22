@@ -1,7 +1,8 @@
 import { FaTrashAlt, FaBookmark } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 
-import { deleteBook, toggleFavorite } from "../../redux/books/actionCreators";
+// import { deleteBook, toggleFavorite } from "../../redux/books/actionCreators";
+import { deleteBook, toggleFavorite } from "../../redux/slices/booksSlice";
 
 import markedMatch from "../../utils/marketMatch";
 
