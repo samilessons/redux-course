@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
+import axios from "axios";
+
 import createBookWithID from "../../utils/createBookWithID";
 // import { addBook } from "../../redux/books/actionCreators";
 import { addBook } from "../../redux/slices/booksSlice";
@@ -23,8 +25,21 @@ const Form = () => {
     }
   };
 
-  const handleAddRandonBook = () => {
+  const handleAddRandomBook = () => {
     dispatch(addBook(createBookWithID(data[Math.floor(Math.random() * data.length)])));
+  };
+
+  const handleAddRandomBookViaAPI = async () => {
+    try {
+      const res = await axios.get("http://localhost:8888/random-book");
+      if (res?.data && res?.data.title && res?.data.author) {
+        dispatch(addBook(createBookWithID(res.data)));
+      }
+    }
+
+    catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -53,17 +68,18 @@ const Form = () => {
             Add Book
           </button>
           <button
-            onClick={handleAddRandonBook}
+            onClick={handleAddRandomBook}
             type="button"
             className="max-md:basis-full max-lg:basis-1/3 flex-1 bg-cyan-600 hover:bg-cyan-500 transition-colors duration-300 text-white text-sm py-2 px-4 rounded-lg cursor-pointer"
           >
             Random
           </button>
           <button
+            onClick={handleAddRandomBookViaAPI}
             type="button"
             className="max-md:basis-full max-lg:basis-1/3 flex-1 bg-[#007bff] text-white text-sm py-2 px-4 rounded-lg cursor-pointer hover:bg-[#0056b3] transition-colors duration-300"
           >
-            Add Book
+            Use API
           </button>
         </div>
       </form>
