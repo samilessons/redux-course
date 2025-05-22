@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import axios from "axios";
-
 import createBookWithID from "../../utils/createBookWithID";
 // import { addBook } from "../../redux/books/actionCreators";
-import { addBook } from "../../redux/slices/booksSlice";
+import { addBook, randomBook, fetchBook } from "../../redux/slices/booksSlice";
 import data from "../../../../data/books.json";
 
 const Form = () => {
@@ -26,21 +24,10 @@ const Form = () => {
   };
 
   const handleAddRandomBook = () => {
-    dispatch(addBook(createBookWithID(data[Math.floor(Math.random() * data.length)], "via random")));
+    dispatch(randomBook(createBookWithID(data[Math.floor(Math.random() * data.length)], "via random")));
   };
 
-  const handleAddRandomBookViaAPI = async () => {
-    try {
-      const res = await axios.get("http://localhost:8888/random-book");
-      if (res?.data && res?.data.title && res?.data.author) {
-        dispatch(addBook(createBookWithID(res.data, "via api")));
-      }
-    }
-
-    catch (e) {
-      console.log(e);
-    }
-  };
+  const handleAddRandomBookViaAPI = () => dispatch(fetchBook());
 
   return (
     <div className="p-4 m-4 bg-[#f2f2f2] rounded-lg shadow-lg">
