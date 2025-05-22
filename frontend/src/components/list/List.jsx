@@ -1,10 +1,11 @@
 import { useSelector } from "react-redux";
 import { selectTitleFilter, selectAuthorFilter, selectonlyFavoriteFilter } from "../../redux/slices/filterSlice";
+import { selectState } from "../../redux/slices/booksSlice";
 
 import ListItem from "../list-item/ListItem";
 
 const List = () => {
-  const books = useSelector(state => state.books);
+  const books = useSelector(selectState);
   const booksByFilteredTitle = useSelector(selectTitleFilter);
   const booksByFilteredAuthor = useSelector(selectAuthorFilter);
   const booksByFilteredOnlyFavorite = useSelector(selectonlyFavoriteFilter)
