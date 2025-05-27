@@ -5,6 +5,7 @@ import createBookWithID from "../../utils/createBookWithID";
 // import { addBook } from "../../redux/books/actionCreators";
 import { addBook, randomBook, fetchBook } from "../../redux/slices/booksSlice";
 import data from "../../../../data/books.json";
+import { setError } from "../../redux/slices/errorSlice";
 
 const Form = () => {
   const [state, setState] = useState({
@@ -18,8 +19,10 @@ const Form = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (title && author) {
-      dispatch(addBook(createBookWithID({ title, author}, "via form")));
+      dispatch(addBook(createBookWithID({ title, author }, "via form")));
       setState({ title: "", author: "" });
+    } else {
+      dispatch(setError("Please fill in both fields."));
     }
   };
 

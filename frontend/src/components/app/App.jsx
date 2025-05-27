@@ -2,6 +2,7 @@ import Header from "../header/Header";
 import Form from "../form/Form";
 import Filter from "../filter/Filter";
 import List from "../list/List";
+import Error from "../error/Error";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <List />
         </div>
       </main>
+      <Error />
     </div>
   );
 }
