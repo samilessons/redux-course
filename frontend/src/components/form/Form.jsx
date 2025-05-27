@@ -30,7 +30,7 @@ const Form = () => {
     dispatch(randomBook(createBookWithID(data[Math.floor(Math.random() * data.length)], "via random")));
   };
 
-  const handleAddRandomBookViaAPI = () => dispatch(fetchBook());
+  const handleAddRandomBookViaAPI = () => dispatch(fetchBook("http://localhost:8888/random-book"));
 
   return (
     <div className="p-4 m-4 bg-[#f2f2f2] rounded-lg shadow-lg">
