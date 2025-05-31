@@ -1,19 +1,20 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { FaSpinner } from "react-icons/fa";
 
 import createBookWithID from "../../utils/createBookWithID";
 // import { addBook } from "../../redux/books/actionCreators";
-import { addBook, randomBook, fetchBook } from "../../redux/slices/booksSlice";
-import data from "../../../../data/books.json";
+import { addBook, randomBook, fetchBook, selectLoadingState } from "../../redux/slices/booksSlice";
 import { setError } from "../../redux/slices/errorSlice";
+
+import data from "../../../../data/books.json";
 
 const Form = () => {
   const [state, setState] = useState({
     title: "",
     author: ""
   });
-  const [loading, setLoading] = useState(false);
+  const loading = useSelector(selectLoadingState);
 
   const dispatch = useDispatch();
   const { title, author } = state;
@@ -32,14 +33,8 @@ const Form = () => {
     dispatch(randomBook(createBookWithID(data[Math.floor(Math.random() * data.length)], "via random")));
   };
 
-  const handleAddRandomBookViaAPI = async () => {
-    try {
-      setLoading(true);
-      await dispatch(fetchBook("http://localhost:8888/random-book-delayed"));
-    }
-    finally {
-      setLoading(false);
-    }
+  const handleAddRandomBookViaAPI =  () => {
+    dispatch(fetchBook("http://localhost:8888/random-book-delayed"));
   };
 
   return (

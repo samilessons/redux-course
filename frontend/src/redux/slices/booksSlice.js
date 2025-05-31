@@ -3,29 +3,32 @@ import axios from "axios";
 import createBookWithID from "../../utils/createBookWithID";
 import { setError } from "./errorSlice";
 
-const initialState = [
-  {
-    id: "1",
-    title: "Book 1",
-    author: "Author 1",
-    source: "initial",
-    isFavorite: false
-  },
-  {
-    id: "2",
-    title: "Book 2",
-    author: "Author 2",
-    source: "initial",
-    isFavorite: true
-  },
-  {
-    id: "3",
-    title: "Book 3",
-    author: "Author 3",
-    source: "initial",
-    isFavorite: false
-  }
-];
+const initialState = {
+  books: [
+    {
+      id: "1",
+      title: "Book 1",
+      author: "Author 1",
+      source: "initial",
+      isFavorite: false
+    },
+    {
+      id: "2",
+      title: "Book 2",
+      author: "Author 2",
+      source: "initial",
+      isFavorite: true
+    },
+    {
+      id: "3",
+      title: "Book 3",
+      author: "Author 3",
+      source: "initial",
+      isFavorite: false
+    }
+  ],
+  loaderViaApi: false
+}
 
 export const fetchBook = createAsyncThunk(
   "books/fetchBook",
@@ -46,16 +49,35 @@ const booksSlice = createSlice({
   name: "books",
   initialState,
   reducers: {
-    addBook: (state, action) => { state.push(action.payload) },
-    randomBook: (state, action) => { state.push(action.payload) },
-    deleteBook: (state, action) => state.filter(book => book.id !== action.payload),
-    toggleFavorite: (state, action) => state.map(book => book.id === action.payload ? { ...book, isFavorite: !book.isFavorite } : book)
+    addBook: (state, action) => {
+      state.books.push(action.payload);
+    },
+    randomBook: (state, action) => {
+      state.books.push(action.payload);
+    },
+    deleteBook: (state, action) => {
+      return { ...state, books: state.books.filter(book => book.id !== action.payload) }
+    },
+    toggleFavorite: (state, action) => {
+      state.books.forEach(book => {
+        if (book.id === action.payload) { 
+          book.isFavorite = !book.isFavorite;
+        }
+      });
+    }
   },
   extraReducers: (builder) => {
+    builder.addCase(fetchBook.pending, (state) => {
+      state.loaderViaApi = true;
+    });
     builder.addCase(fetchBook.fulfilled, (state, action) => {
+      state.loaderViaApi = false;
       if (action.payload.title && action.payload.author) {
-        state.push(createBookWithID(action.payload, "via api"));
+        state.books.push(createBookWithID(action.payload, "via api"));
       }
+    });
+    builder.addCase(fetchBook.rejected, (state) => {
+      state.loaderViaApi = false;
     });
   }
 });
@@ -83,6 +105,7 @@ export const {
 // };
 
 // State
-export const selectState = state => state.books;
+export const selectBooksState = state => state.books.books;
+export const selectLoadingState = state => state.books.loaderViaApi;
 
 export default booksSlice.reducer;

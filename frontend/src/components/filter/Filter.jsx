@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setTitleFilter,
@@ -11,7 +10,6 @@ import {
 } from "../../redux/slices/filterSlice";
 
 const Filter = () => {
-  const [checked, setChecked] = useState(false);
   const dispatch = useDispatch();
 
   const stateOfTitle = useSelector(selectTitleFilter);
@@ -20,10 +18,7 @@ const Filter = () => {
 
   const handleByTitle = (e) => dispatch(setTitleFilter(e.target.value));
   const handleByAuthor = (e) => dispatch(setAuthorFilter(e.target.value));
-  const handleByOnlyFavorite = () => {
-    setChecked(prevState => !prevState);
-    dispatch(setOnlyFavoriteFilter());
-  }
+  const handleByOnlyFavorite = () => dispatch(setOnlyFavoriteFilter());
   const handleResetFilters = () => dispatch(resetFilters());
 
   return (
@@ -52,7 +47,7 @@ const Filter = () => {
             type="checkbox"
             checked={stateOfOnlyFavorite}
             style={
-              checked ? {
+              stateOfOnlyFavorite ? {
                 clipPath: "polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%)",
                 transformOrigin: "bottom left",
                 appearance: "none",
